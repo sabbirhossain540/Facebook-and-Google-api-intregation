@@ -64,56 +64,39 @@ class LoginController extends Controller
     public function handleProviderCallback()
     {
         $user = Socialite::driver('google')->stateless()->user();
-        $finduser = User::where('social', $user->id)->first();
+        $newUser = $this->userCreate($user, 'google');
 
-        if($finduser){
-     
-            Auth::login($finduser);
-
-            return redirect('/home');
- 
-        }else{
-            $newUser = User::create([
-                'name' => $user->name,
-                'email' => $user->email,
-                'social'=> $user->id,
-                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
-                'provider' => 'google'
-            ]);
-
-            Auth::login($newUser);
- 
-            return redirect('/home');
-        }
-        // $user->token;
+        Auth::login($newUser);
+        return redirect('/home');
     }
-
 
     public function handleProviderCallbackForGithub()
     {
         $user = Socialite::driver('github')->stateless()->user();
-        //dd($user);
+        $newUser = $this->userCreate($user, 'github');
+
+        Auth::login($newUser);
+        return redirect('/home');
+    }
+
+
+    public function userCreate($user, $provider){
+
         $finduser = User::where('social', $user->id)->first();
 
         if($finduser){
-     
             Auth::login($finduser);
-
             return redirect('/home');
- 
         }else{
-            $newUser = User::create([
+            $finduser = User::create([
                 'name' => $user->name,
                 'email' => $user->email,
                 'social'=> $user->id,
                 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
                 'provider' => 'github',
             ]);
-
-            Auth::login($newUser);
- 
-            return redirect('/home');
         }
-        // $user->token;
+
+        return $finduser;
     }
 }
