@@ -51,6 +51,11 @@ class LoginController extends Controller
         return Socialite::driver('google')->redirect();
     }
 
+    public function redirectToProviderForGithub()
+    {
+        return Socialite::driver('github')->redirect();
+    }
+
     /**
      * Obtain the user information from GitHub.
      *
@@ -72,7 +77,37 @@ class LoginController extends Controller
                 'name' => $user->name,
                 'email' => $user->email,
                 'social'=> $user->id,
-                'password' => encrypt('12345678')
+                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
+                'provider' => 'google'
+            ]);
+
+            Auth::login($newUser);
+ 
+            return redirect('/home');
+        }
+        // $user->token;
+    }
+
+
+    public function handleProviderCallbackForGithub()
+    {
+        $user = Socialite::driver('github')->stateless()->user();
+        //dd($user);
+        $finduser = User::where('social', $user->id)->first();
+
+        if($finduser){
+     
+            Auth::login($finduser);
+
+            return redirect('/home');
+ 
+        }else{
+            $newUser = User::create([
+                'name' => $user->name,
+                'email' => $user->email,
+                'social'=> $user->id,
+                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
+                'provider' => 'github',
             ]);
 
             Auth::login($newUser);

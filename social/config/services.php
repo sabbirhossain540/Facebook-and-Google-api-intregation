@@ -37,9 +37,15 @@ return [
     ],
 
     'google' => [
-        'client_id' => '642469283915-7ui2455fagfcv457tf0d17bb732cvb6j.apps.googleusercontent.com',
-        'client_secret' => 'Xxk6Di_lvPg_3tr6JzH_Bx-t',
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
         'redirect' => 'http://localhost:8000/login/google/callback',
+      ],
+
+      'github' => [
+        'client_id' => env('GITHUB_CLIENT_ID'),
+        'client_secret' => env('GITHUB_CLIENT_SECRET'),
+        'redirect' => 'http://localhost:8000/login/github/callback',
       ],
 
 ];
