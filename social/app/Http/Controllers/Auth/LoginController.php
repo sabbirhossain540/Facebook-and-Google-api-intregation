@@ -48,7 +48,11 @@ class LoginController extends Controller
      */
     public function redirectToProvider()
     {
-        return Socialite::driver('google')->redirect();
+        //Use Only for login system
+        //return Socialite::driver('google')->redirect();
+
+        $parameters = ['access_type' => 'offline'];
+        return Socialite::driver('google')->scopes(["https://www.googleapis.com/auth/drive"])->with($parameters)->redirect();
     }
 
     public function redirectToProviderForGithub()
@@ -63,11 +67,17 @@ class LoginController extends Controller
      */
     public function handleProviderCallback()
     {
-        $user = Socialite::driver('google')->stateless()->user();
-        $newUser = $this->userCreate($user, 'google');
+        $auth_user = Socialite::driver('google')->stateless()->user();
 
-        Auth::login($newUser);
-        return redirect('/home');
+        $user = User::updateOrCreate(['email' => $auth_user->email], ['name' => $auth_user->name , 'social' => $auth_user->id, 'refresh_token' => $auth_user->token, 'provider' => 'google']);
+        //dd($auth_user->token);
+        Auth::login($user, true);
+        return redirect()->to('/home'); // Redirect to a secure page
+//        $user = Socialite::driver('google')->stateless()->user();
+//        $newUser = $this->userCreate($user, 'google');
+//
+//        Auth::login($newUser);
+//        return redirect('/home');
     }
 
     public function handleProviderCallbackForGithub()

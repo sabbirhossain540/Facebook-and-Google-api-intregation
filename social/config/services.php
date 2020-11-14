@@ -40,6 +40,12 @@ return [
         'client_id' => env('GOOGLE_CLIENT_ID'),
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
         'redirect' => 'http://localhost:8000/login/google/callback',
+
+        'project_id' => env('GOOGLE_APP_ID'),
+        'auth_uri' => 'https://accounts.google.com/o/oauth2/auth',
+        'token_uri' => 'https://accounts.google.com/o/oauth2/token',
+        'auth_provider_x509_cert_url' => 'https://www.googleapis.com/oauth2/v1/certs',
+        'redirect_uris' => [env('GOOGLE_REDIRECT')],
       ],
 
       'github' => [
@@ -47,5 +53,16 @@ return [
         'client_secret' => env('GITHUB_CLIENT_SECRET'),
         'redirect' => 'http://localhost:8000/login/github/callback',
       ],
+
+//    'google' => [
+//        'client_id' => env('GOOGLE_CLIENT_ID'),
+//        'project_id' => env('GOOGLE_APP_ID'),
+//        'auth_uri' => 'https://accounts.google.com/o/oauth2/auth',
+//        'token_uri' => 'https://accounts.google.com/o/oauth2/token',
+//        'auth_provider_x509_cert_url' => 'https://www.googleapis.com/oauth2/v1/certs',
+//        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+//        'redirect' => env('GOOGLE_REDIRECT'),
+//        'redirect_uris' => [env('GOOGLE_REDIRECT')],
+//    ]
 
 ];

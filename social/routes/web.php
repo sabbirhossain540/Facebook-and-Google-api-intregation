@@ -28,11 +28,16 @@ Route::get('/login/github', 'Auth\LoginController@redirectToProviderForGithub')-
 Route::get('/login/github/callback', 'Auth\LoginController@handleProviderCallbackForGithub');
 
 Route::get('/calender', 'GoogleCalenderController@index')->name('calender');
-Route::get('/google_drive', 'GoogleDriveController@index')->name('google_drive');
+Route::get('/google_drive', 'GoogleDriveController@getDrive')->name('google_drive');
 Route::get('/google_map', 'GoogleMapController@index')->name('google_map');
 Route::get('/youtube', 'YoutubeController@index')->name('youtube');
 
 
-
+//Using this URL for Google Drive
+Route::get('/drive', 'GoogleDriveController@getDrive'); // retreive folders
+Route::get('/drive/upload', 'GoogleDriveController@uploadFile'); // File upload form
+Route::post('/drive/upload', 'GoogleDriveController@uploadFile'); // Upload file to Drive from Form
+Route::get('/drive/create', 'GoogleDriveController@create'); // Upload file to Drive from Storage
+Route::get('/drive/delete/{id}', 'GoogleDriveController@deleteFile'); // Delete file or folder
 
 
