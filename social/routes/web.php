@@ -27,5 +27,12 @@ Route::get('/login/google/callback', 'Auth\LoginController@handleProviderCallbac
 Route::get('/login/github', 'Auth\LoginController@redirectToProviderForGithub')->name('github_login');
 Route::get('/login/github/callback', 'Auth\LoginController@handleProviderCallbackForGithub');
 
+Route::get('/calender', 'GoogleCalenderController@index')->name('calender');
+Route::get('/google_drive', 'GoogleDriveController@index')->name('google_drive');
+Route::get('/google_map', 'GoogleMapController@index')->name('google_map');
+Route::get('/youtube', 'YoutubeController@index')->name('youtube');
+
+
+
 
 
